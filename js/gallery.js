@@ -72,7 +72,7 @@ let galleryMarkup = images.map(image => {
 
 gallery.insertAdjacentHTML('beforeend', galleryMarkup);
 
-const instance = basicLightbox.create(`<img src="" alt="Large Image">`);
+const instance = basicLightbox.create(`<img class="modal-image" src="" alt="Large Image">`);
 
 function openModal(imageSrc) {
   instance.element().querySelector('img').setAttribute('src', imageSrc);
