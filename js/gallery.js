@@ -64,19 +64,18 @@ const images = [
   },
 ];
 
-const listWithClass = document.querySelector('.gallery');
+const gallery = document.querySelector('.gallery');
 
 let galleryMarkup = images.map(image => {
   return `<li class="gallery-item"><a class="gallery-link" href="${image.original}"><img src="${image.preview}" alt="${image.description}" class="gallery-img" data-source="${image.original}"></a></li>`
 }).join('')
 
-listWithClass.insertAdjacentHTML('beforeend', galleryMarkup);
+gallery.insertAdjacentHTML('beforeend', galleryMarkup);
+
+const instance = basicLightbox.create(`<img src="" alt="Large Image">`);
 
 function openModal(imageSrc) {
-  const instance = basicLightbox.create(`
-    <img src="${imageSrc}" alt="Large Image">
-  `);
-
+  instance.element().querySelector('img').setAttribute('src', imageSrc);
   instance.show();
 }
 
@@ -85,10 +84,10 @@ function showLargeImage(event) {
   const target = event.target;
   const largeImageSrc = target.dataset.source; 
   console.log('Посилання на велике зображення:', largeImageSrc);
-  openModal(largeImageSrc);
+
+  if (largeImageSrc) {
+    openModal(largeImageSrc);
+  }
 }
 
-const galleryItems = document.querySelectorAll('.gallery-img');
-galleryItems.forEach(galleryItem => {
-    galleryItem.addEventListener('click', showLargeImage);
-});
+gallery.addEventListener('click', showLargeImage);
